@@ -33,13 +33,13 @@ func getIPAddress(domain string) (string, error) {
 	var DNSResp DNSResponse
 	if err := json.Unmarshal(body, &DNSResp); err != nil {
 		return "", err
-	} else {
-		if len(DNSResp.Answer) == 0 {
-			return "", fmt.Errorf("no IP address found")
-		} else {
-			return DNSResp.Answer[0].Data, nil
-		}
 	}
+
+	if len(DNSResp.Answer) == 0 {
+		return "", fmt.Errorf("no IP address found")
+	}
+
+	return DNSResp.Answer[0].Data, nil
 
 	//return string(body), nil
 }
